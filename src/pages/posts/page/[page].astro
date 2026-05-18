@@ -2,7 +2,7 @@
 import {
   getPostsByPage,
   getRankedPosts,
-  getAllTags,
+  getAllTagsWithCount,
   getNumberOfPages,
   getPostsByPage,
 } from '../../../lib/notion/client.ts'
@@ -34,7 +34,7 @@ const { page } = Astro.params
 const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   getPostsByPage(parseInt(page, 10)),
   getRankedPosts(),
-  getAllTags(),
+  getAllTagsWithCount(),
   getNumberOfPages(),
 ])
 ---
