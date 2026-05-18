@@ -1,14 +1,11 @@
-name: Deploy
-
+name: Scheduled Deploy to Vercel
 on:
-  #schedule:
-  #  - cron: '5 23 * * 0' # 08:05(Mon) JST
-  workflow_dispatch:
-
+  schedule:
+    - cron: '0 0,12 * * *' # UTC 기준 00시, 12시 (한국 시간 오전 9시, 오후 9시)
+  workflow_dispatch: # 언제든 내가 깃허브 Actions 탭에서 수동으로 실행하고 싶을 때 쓰는 버튼 생성
 jobs:
-  curl:
-    name: Kick deploy hook
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: curl
-        run: curl -X POST '${{ secrets.DEPLOY_HOOK_URL }}'
+      - name: Trigger Vercel Deploy Hook
+        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
