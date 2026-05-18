@@ -394,6 +394,37 @@ export async function getAllTags(): Promise<SelectProperty[]> {
     )
 }
 
+export type TagWithCount = SelectProperty & { count: number }
+
+export async function getAllTagsWithCount(): Promise<TagWithCount[]> {
+  const allPosts = await getAllPosts()
+  const tagMap = new Map<string, TagWithCount>()
+
+  allPosts.flatMap((post) => post.Tags).forEach((tag) => {
+    const current = tagMap.get(tag.name)
+
+    if (current) {
+      current.count += 1
+    } else {
+      tagMap.set(tag.name, { ...tag, count: 1 })
+    }
+  })
+
+  return Array.from(tagMap.values()).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
+}
+
+export async function getAllPostsByTag(tagName: string): Promise<Post[]> {
+  if (!tagName) return []
+
+  const allPosts = await getAllPosts()
+
+  return allPosts.filter((post) =>
+    post.Tags.find((tag) => tag.name === tagName)
+  )
+}
+
 export async function downloadFile(url: URL) {
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
