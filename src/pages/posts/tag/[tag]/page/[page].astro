@@ -3,7 +3,7 @@ import type { SelectProperty } from '../../../../../lib/interfaces.ts'
 import {
   getPostsByTagAndPage,
   getRankedPosts,
-  getAllTags,
+  getAllTagsWithCount,
   getNumberOfPagesByTag,
 } from '../../../../../lib/notion/client.ts'
 import Layout from '../../../../../layouts/Layout.astro'
@@ -21,7 +21,7 @@ import styles from '../../../../../styles/blog.module.css'
 import '../../../../../styles/notion-color.css'
 
 export async function getStaticPaths() {
-  const allTags = await getAllTags()
+  const allTags = await getAllTagsWithCount()
 
   let params = []
 
@@ -43,7 +43,7 @@ const { tag, page } = Astro.params
 const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   getPostsByTagAndPage(tag, parseInt(page, 10)),
   getRankedPosts(),
-  getAllTags(),
+  getAllTagsWithCount(),
   getNumberOfPagesByTag(tag),
 ])
 
