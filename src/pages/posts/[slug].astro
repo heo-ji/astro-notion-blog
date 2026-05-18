@@ -7,7 +7,7 @@ import {
   getPostBySlug,
   getPostsByTag,
   getBlock,
-  getAllTags,
+  getAllTagsWithCount,
   getAllBlocksByBlockId,
   downloadFile,
 } from '../../lib/notion/client.ts'
@@ -44,7 +44,7 @@ const [blocks, allPosts, rankedPosts, recentPosts, tags, postsHavingSameTag] =
     getAllPosts(),
     getRankedPosts(),
     getPosts(5),
-    getAllTags(),
+    getAllTagsWithCount(),
     getPostsByTag(post.Tags[0]?.name, 6),
   ])
 
