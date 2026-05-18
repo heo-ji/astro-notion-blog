@@ -4,9 +4,11 @@ import { getTagLink } from '../lib/blog-helpers.ts'
 import NoContents from './NoContents.astro'
 import '../styles/notion-color.css'
 
+type TagWithOptionalCount = SelectProperty & { count?: number }
+
 export interface Props {
   heading: string
-  tags: SelectProperty[]
+  tags: TagWithOptionalCount[]
 }
 
 const { heading, tags } = Astro.props
@@ -22,8 +24,11 @@ const { heading, tags } = Astro.props
         {tags.map((tag: SelectProperty) => (
           <li>
             <a href={getTagLink(tag.name)} class={`tag ${tag.color}`}>
-              {tag.name}
-            </a>
+                <span class="tag-name">{tag.name}</span>
+                {typeof tag.count === 'number' && (
+                  <span class="tag-count">{tag.count}</span>
+                )}
+              </a>
           </li>
         ))}
       </ul>
