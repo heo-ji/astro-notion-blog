@@ -3,7 +3,7 @@ import { NUMBER_OF_POSTS_PER_PAGE } from '../server-constants.ts'
 import {
   getPosts,
   getRankedPosts,
-  getAllTags,
+  getAllTagsWithCount,
   getNumberOfPages,
 } from '../lib/notion/client.ts'
 import Layout from '../layouts/Layout.astro'
@@ -22,7 +22,7 @@ import styles from '../styles/blog.module.css'
 const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
   getPosts(NUMBER_OF_POSTS_PER_PAGE),
   getRankedPosts(),
-  getAllTags(),
+  getAllTagsWithCount(),
   getNumberOfPages(),
 ])
 ---
